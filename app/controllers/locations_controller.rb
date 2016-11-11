@@ -3,9 +3,12 @@ class LocationsController < ApplicationController
 
   # GET /locations
   def index
-    @locations = Location.all
-
-    render json: @locations
+    @locations = current_user.location
+    unless @locations
+      render json: []
+    else
+      render json: @locations
+    end
   end
 
   # GET /locations/1
