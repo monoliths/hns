@@ -10,19 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111011553) do
+ActiveRecord::Schema.define(version: 20161114094857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "locations", force: :cascade do |t|
-    t.float    "latitude",   null: false
-    t.float    "longitude",  null: false
-    t.float    "altitude",   null: false
+    t.float    "latitude",   default: 0.0, null: false
+    t.float    "longitude",  default: 0.0, null: false
+    t.float    "altitude",   default: 0.0, null: false
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.index ["user_id"], name: "index_locations_on_user_id", using: :btree
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "consumer_id",                 null: false
+    t.integer "producer_id",                 null: false
+    t.boolean "approval",    default: false, null: false
+    t.index ["consumer_id"], name: "index_sessions_on_consumer_id", using: :btree
+    t.index ["producer_id"], name: "index_sessions_on_producer_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

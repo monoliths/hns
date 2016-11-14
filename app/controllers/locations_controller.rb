@@ -3,6 +3,7 @@ class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :update, :destroy]
 
   # GET /locations
+  # currently only exist for testing purposes
   def index
     @locations = current_user.location
     unless @locations
@@ -13,19 +14,9 @@ class LocationsController < ApplicationController
   end
 
   # GET /locations/1
+  # currently only exist for testing purposes
   def show
     render json: @location
-  end
-
-  # POST /locations
-  def create
-    @location = Location.new(location_params)
-
-    if @location.save
-      render json: @location, status: :created, location: @location
-    else
-      render json: @location.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /locations/1
@@ -37,10 +28,23 @@ class LocationsController < ApplicationController
     end
   end
 
+  # POST /locations
+  # locations are created when a user is created.
+  # def create
+  #   @location = Location.new(location_params)
+  #
+  #   if @location.save
+  #     render json: @location, status: :created, location: @location
+  #   else
+  #     render json: @location.errors, status: :unprocessable_entity
+  #   end
+  # end
+
   # DELETE /locations/1
-  def destroy
-    @location.destroy
-  end
+  # locations are only destroyed when a user destroys their account
+  # def destroy
+  #   @location.destroy
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -50,6 +54,6 @@ class LocationsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def location_params
-      params.require(:location).permit(:x, :y, :z, :user_id)
+      params.require(:location).permit(:longitude, :latitude, :altitude, :user_id)
     end
 end
