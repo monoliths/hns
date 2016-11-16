@@ -5,7 +5,7 @@ class UsersController < ApplicationController
       Location.create!(latitude: 0.0, longitude: 0.0, altitude: 0.0, user_id: user.id)
       render json: user, status: 201
     else
-      render json: { errors: user.errors }, status: 422
+      render json: { error: user.errors }, status: :bad_request
     end
   end
 
