@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
-  before_action :authenticate_request
-  before_action :set_location, only: [:show, :update, :destroy]
+  #before_action :authenticate_request
+  #before_action :set_location, only: [:show, :update, :destroy]
 
   # GET /locations
   # currently only exist for testing purposes
@@ -21,8 +21,22 @@ class LocationsController < ApplicationController
 
   # PATCH/PUT /locations/1
   def update
+    unless params[:id] == current_user.id
+      render json: {"Location": {"error": "provided token does not map to the user id provided"} }
+      return
+    end
     if @location.update(location_params)
       render json: @location
+    else
+      render json: @location.errors, status: :unprocessable_entity
+    end
+  end
+
+  # updates the locaiton for the curren_user using the given token
+  def update_current_user_location
+    @location = current_user.location
+    if @location.update(location_params)
+      render @location
     else
       render json: @location.errors, status: :unprocessable_entity
     end
@@ -54,6 +68,6 @@ class LocationsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def location_params
-      params.require(:location).permit(:longitude, :latitude, :altitude, :user_id)
+      params.require(:location).permit(:longitude, :latitude, :altitude)
     end
 end
