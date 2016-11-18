@@ -11,5 +11,9 @@ User.create(name: "gerald", email: "gerald@example.com", password: "123wqeasd", 
 User.create(name: "bob", email: "bob@bob.com", password: "123123123", password_confirmation: "123123123")
 User.create(name: "tim", email: "tim@tim.com", password: "123123123", password_confirmation: "123123123")
 
+# Location(id: integer, latitude: float, longitude: float, altitude: float, user_id: integer, created_at: datetime, updated_at: datetime)
+Location.create(user_id: User.first.id)
+Location.create(user_id: User.last.id)
+
 # Session(id: integer, consumer_id: integer, producer_id: integer, approval: boolean)
 Session.create(consumer: User.first, producer: User.last)
