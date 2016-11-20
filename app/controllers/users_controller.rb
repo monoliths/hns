@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
+  VALID_USER_SEARCH_PARAMS = [:name, :email, :id]
 
   def create
     user = User.new(user_params)
@@ -8,6 +9,20 @@ class UsersController < ApplicationController
       render json: user, status: 201
     else
       render json: { error: user.errors }, status: :bad_request
+    end
+  end
+
+  def user_search
+    # only want valid params to be sliced out of the provided params
+    search_params = params.slice(*VALID_USER_SEARCH_PARAMS).deep_symbolize_keys
+
+    # execute the search
+    user = User.find_by(search_params)
+
+    if user
+      render json: user 
+    else
+     render json: {}, status: 404
     end
   end
 

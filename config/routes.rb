@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :users, only: [:create]
   resources :sessions, only: [:create, :show, :destroy]
   post 'authenticate', to: 'authentication#authenticate'
-  get 'user_info', to: 'users#user_info'
+  get 'userinfo', to: 'users#user_info'
+  get 'users/search', to: 'users#user_search'
 end
