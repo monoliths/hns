@@ -11,6 +11,12 @@ class UsersController < ApplicationController
     end
   end
 
+
+  # uses token to return user location.
+  def user_info
+    render json: current_user 
+  end
+
   private
 
   def user_params

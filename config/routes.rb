@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :locations, only: [:update, :show, :index]
+  resources :locations, only: [:update, :show, :destroy]
   resources :users, only: [:create]
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :sessions, only: [:create, :show, :destroy]
   post 'authenticate', to: 'authentication#authenticate'
-  
+  get 'user_info', to: 'users#user_info'
 end
