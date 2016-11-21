@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if user
       render json: user 
     else
-     render json: {}, status: 404
+     render json: { "error": "resource not found" }, status: 404
     end
   end
 

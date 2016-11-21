@@ -1,10 +1,13 @@
 class LocationsController < ApplicationController
 
   # GET /locations/1
-  # currently only exist for testing purposes
   def show
     location = Location.find(params[:id])
-    render json: @location
+    if location
+      render json: location
+    else
+      render json: {}, status:404
+    end
   end
 
   # PATCH/PUT /locations/1
